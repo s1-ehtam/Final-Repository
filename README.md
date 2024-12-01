@@ -171,6 +171,7 @@ The midpoint-rooted ASCII tree for D-2-hydroxy-acid dehydrogenases.
 ```
 
 ## Reconciliation for the D-2-hydroxy-acid dehydrogenases
+
 ```
 cp ~/lab05-$MYGIT/LDHD/LDHD.homologsf.al.mid.treefile ~/l
 ab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile
@@ -218,6 +219,7 @@ Cost = 27
 5 speciation events to 2 speciation events and 4 losses
 
 ## Motif and Domain Identification Using RPS-BLAST and Pfam
+
 We will be using RPS-BLAST to idenfity Pfam domains within our protein sequences. To do this, we will use sed's substitute command to substitute any instance of an asterisk with nothing. 
 ```
 sed 's/*//' ~/lab04-$MYGIT/LDHD/LDHD.homologs.fas > ~/lab08-$MYGIT/LDHD/LDHD.homologs.fas
