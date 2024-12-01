@@ -217,4 +217,60 @@ Cost = 27
 
 5 speciation events to 2 speciation events and 4 losses
 
+## Motif and Domain Identification Using RPS-BLAST and Pfam
+We will be using RPS-BLAST to idenfity Pfam domains within our protein sequences. To do this, we will use sed's substitute command to substitute any instance of an asterisk with nothing. 
+```
+sed 's/*//' ~/lab04-$MYGIT/LDHD/LDHD.homologs.fas > ~/lab08-$MYGIT/LDHD/LDHD.homologs.fas
+```
+The Pfam database has alrady been downloaded to ~/data/Pfam/. It contains models that enable "functional analysis of proteins by classifying them into families and predicting domains and important sites. "
+```
+rpsblast -query ~/lab08-$MYGIT/LDHD/LDHD.homologs.fas -db ~/data/Pfam/Pfam -out ~/lab08-$MYGIT/LDHD/LDHD.rps-blast.out  -outfmt "6 qseqid qlen qstart qend evalue stitle" -evalue .0000000001
+```
+Plot the predicted Pfam domains on the phylogeny.
+```
+cp ~/lab05-$MYGIT/LDHD/LDHD.homologsf.outgroupbeta.treefile ~/lab08-$MYGIT/LDHD
+```
+Rscript: The Rscript program allows you to run an R script from the command line, without opening up the R console.
+--vanilla: This command flag indicates to R not save or restore a workspace or previous settings.
+plotTreeAndDomains.r: The script that Dr. Rest wrote. You can take a look at it using less, for example.
+Now provide the names of three files, in order: tree file, rps-blast output, and the name of the output file that you want. For example:
+~/lab05-$MYGIT/globins/globins.homologs.al.mid.treefile: Our midpoint rooted tree file for the globins proteins.
+~/lab08-$MYGIT/globins/globins.rps-blast.out: Our predicted pfram domains from rps-blast.
+~/lab08-$MYGIT/globins/globins.tree.rps.pdf: The name of the output pdf file we will create.
 
+```
+Rscript  --vanilla ~/lab08-$MYGIT/plotTreeAndDomains.r ~/lab08-$MYGIT/LDHD/LDHD.homologsf.outgroupbeta.treefile ~/lab08-$MYGIT/LDHD/LDHD.rps-blast.out ~/lab08-$MYGIT/LDHD/LDHD.tree.rps.pdf
+```
+The tab delimited annotations in globins.rps-blast.out. Use less to look at it, put it in a spreadsheet program, or here is a nice way to look at it:
+```
+mlr --inidx --ifs "\t" --opprint  cat ~/lab08-$MYGIT/LDHD/LDHD.rps-blast.out | tail -n +2 | less -S
+```
+Examine the distribution of Pfam domains across proteins.
+```
+cut -f 1 ~/lab08-$MYGIT/LDHD/LDHD.rps-blast.out | sort | uniq -c
+```
+Which protein has the longest annotated protein domain?
+```
+awk '{a=$4-$3;print $1,'\t',a;}' ~/lab08-$MYGIT/LDHD/LDHD.rps-blast.out |  sort  -k2nr
+```
+E-values of protein domain hits. Here's a command to pull out just the e-values:
+```
+cut -f 1,5 -d $'\t' ~/lab08-$MYGIT/LDHD/LDHD.rps-blast.out
+```
+
+Which pfam domains are found in the most genes?
+```
+22 pfam01565, FAD_binding_4, FAD binding domain. This family consists of various enzymes that use FAD as a co-factor, most of the enzymes are similar to oxygen oxidoreductase. One of the enzymes Vanillyl-alcohol oxidase (VAO) has a solved structure, the alignment includes the FAD binding site, called the PP-loop, between residues 99-110. The FAD molecule is covalently bound in the known structure, however the residue that links to the FAD is not in the alignment. VAO catalyzes the oxidation of a wide variety of substrates, ranging form aromatic amines to 4-alkylphenols. Other members of this family include D-lactate dehydrogenase, this enzyme catalyzes the conversion of D-lactate to pyruvate using FAD as a co-factor; mitomycin radical oxidase, this enzyme oxidizes the reduced form of mitomycins and is involved in mitomycin resistance. This family includes MurB an UDP-N-acetylenolpyruvoylglucosamine reductase enzyme EC:1.1.1.158. This enzyme is involved in the biosynthesis of peptidoglycan.
+```
+
+1. Are any pfam domains found multiple times in a single gene?
+
+No, there appears to be no repeats among the genes from a specific pfam domain.
+
+2. Which gene has the longest pfam domain annotation? When domain is this?
+
+F.catus_D2HGDH_D2hydroxyglutarate_dehydrogenase_mitochondrial_iso 269
+
+3. Which domain annotations has the best e-value?
+
+C.carcharias_ldhd_probable_Dlactate_dehydrogenase_mitochondrial 2.13e-78
