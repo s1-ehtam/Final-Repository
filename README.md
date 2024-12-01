@@ -170,24 +170,51 @@ The midpoint-rooted ASCII tree for D-2-hydroxy-acid dehydrogenases.
                                                                  \-+ H.sapiens D2HGDH D2hydroxyglutarate dehydrogenase mitochondrial i
 ```
 
-mkdir ~/lab06-$MYGIT/LDHD
-
+## Reconciliation for the D-2-hydroxy-acid dehydrogenases
+```
 cp ~/lab05-$MYGIT/LDHD/LDHD.homologsf.al.mid.treefile ~/l
 ab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile
+```
+Reconcile the gene and species tree using Notung; Use the following command to perform the reconciliation:
 
+```
 java -jar ~/tools/Notung-3.0_24-beta/Notung-3.0_24-beta.jar -s ~/lab05-$MYGIT/species.tre -g ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile --reconcile --
 speciestag prefix --savepng --events --outputdir ~/lab06-$MYGIT/LDHD/
-
+```
+We can see the node names that notung used/assigned to these internal nodes with this command. But for our species tree, all internal nodes have names, so this doesn't provide any additional information.
+```
 grep NOTUNG-SPECIES-TREE ~/lab06-$MYGIT/LDHD/LDHD.homolog
 s.al.mid.treefile.rec.ntg | sed -e "s/^\[&&NOTUNG-SPECIES-TREE//" -e "s/\]/;/" | nw_display -
+```
+Generate a RecPhyloXML object and view the gene-within-species tree via thirdkind
+Use the following command:
 
+```
 python2.7 ~/tools/recPhyloXML/python/NOTUNGtoRecPhyloXML.py -g ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.ntg --include.species
 \argument  -g : /home/bio312-user/lab06-s1-ehtam/LDHD/LDHD.homologs.al.mid.treefile.rec.ntg
 --include.species
+```
+To create a gene-reconciliation-within species tree reconciliation graphic, use thirdkind:
+```
+thirdkind -Iie -D 40 -f ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.ntg.xml -o  ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.svg
+```
+Convert to a pdf for easy viewing:
+```
+convert  -density 150 ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.svg ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.pdf
 
-hirdkind -Iie -D 40 -f ~/lab06-$MYGIT/LDHD/LD
-HD.homologs.al.mid.treefile.rec.ntg.xml -o  ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.sv
-g
+```
+The thirdkind and notung visualizations should be in your repository, along with all intermediate files.
 
-convert  -density 150 ~/lab06-$MYGIT/LDHD/LDHD
-.homologs.al.mid.treefile.rec.svg ~/lab06-$MYGIT/LDHD/LDHD.homologs.al.mid.treefile.rec.pdf
+1. What is the cost of the reconciled tree?
+
+Cost = 27
+
+2. How many copies were in the common ancestor of Gnathostomes?
+
+6 copies
+
+3. Describe the events leading to the common ancestor of Tetrapods.
+
+5 speciation events to 2 speciation events and 4 losses
+
+
