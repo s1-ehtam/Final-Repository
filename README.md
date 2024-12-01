@@ -171,7 +171,8 @@ The midpoint-rooted ASCII tree for D-2-hydroxy-acid dehydrogenases.
 ```
 
 ## Reconciliation for the D-2-hydroxy-acid dehydrogenases
-![download](https://github.com/user-attachments/assets/f503acf3-ee3c-4fcc-b3ae-e32309461192)
+![download](https://github.com/user-attachments/assets/d4370a6a-63cb-4a18-aecf-c3cfe0faad4d)
+
 
 ```
 cp ~/lab05-$MYGIT/LDHD/LDHD.homologsf.al.mid.treefile ~/l
