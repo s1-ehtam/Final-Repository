@@ -9,6 +9,8 @@ D-2-hydroxy-acid dehydrogenases contain a wide range of oxidoreductases that are
 
 We will be using methods of Bioinformatic Searches, Gene Tree-Species Tree Reconciliation, and Domain Identification to determine the evolutionary history of this gene family.
 
+![image](https://github.com/user-attachments/assets/09d59c09-ca11-488b-9513-16c33fb51f20)
+
 
 ## Find and align D-2-hydroxy-acid dehydrogenases using StartingGene LDHD as the query sequence
 
